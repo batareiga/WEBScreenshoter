@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Screenshot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <form id="form">
+        <label for="url">Enter website URL:</label>
+        <input type="text" id="url" name="url"><br><br>
+        <button type="submit">Take Screenshot</button>
+    </form>
+    <img id="screenshot" src="" alt="Screenshot">
+    <script src="script.js"></script>
+</body>
+</html>
+
+// Script.js
+const form = document.getElementById('form');
+const urlInput = document.getElementById('url');
+const screenshotImg = document.getElementById('screenshot');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const url = urlInput.value;
+    try {
+        const browser = await puppeteer.launch({ headless: true });
+        const page = await browser.newPage();
+        await page.goto(url);
+        await page.screenshot({ path: 'screenshot.png', fullPage: true });
+        await browser.close();
+        screenshotImg.src = 'screenshot.png';
+    } catch (err) {
+        console.error(err);
+    }
+});
