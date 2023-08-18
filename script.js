@@ -1,33 +1,15 @@
 document.querySelector('#form').addEventListener('submit', (e) => {
     e.preventDefault();
-
-const form = document.querySelector('#form');
-const urlInput = document.querySelector('#url');
-const backgroundColorInput = document.querySelector('#backgroundColor');
-const textColorInput = document.querySelector('#textColor');
-const textArea = document.querySelector('#text');
-
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const url = urlInput.value;
-    const backgroundColor = backgroundColorInput.value;
-    const textColor = textColorInput.value;
-    const text = textArea.value;
-    
+    const url = document.querySelector('#url').value;
+    const textColor = document.querySelector('#textColor').value;
     const canvas = document.createElement('canvas');
-
-const canvas = createCanvas(window.innerWidth, window.innerHeight);
-const ctx = canvas.getContext('2d');
-ctx.fillStyle = backgroundColor;
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-const img = new Image();
-img.src = url;
-ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-ctx.font = '24px Arial';
-ctx.fillStyle = textColor;
-ctx.textAlign = 'center';
-ctx.textBaseline = 'middle';
-ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const img = new Image();
+    img.src = url;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     ctx.font = '24px Arial';
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
@@ -39,4 +21,3 @@ ctx.fillText(text, canvas.width / 2, canvas.height / 2);
     link.setAttribute('download', `screenshot_${new Date().getTime()}.png`);
     link.click();
 });
-
