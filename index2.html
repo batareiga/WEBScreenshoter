@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Maker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            margin: 50px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .url-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .url-input::placeholder {
+            color: #ccc;
+        }
+        .background-color-picker {
+            display: inline-block;
+            width: 100%;
+            height: 30px;
+            background-image: linear-gradient(to bottom, #333, #555);
+            background-size: 100% 200px;
+            cursor: pointer;
+        }
+        .background-color-picker::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .background-color-picker.green {
+            background-color: #33CC33;
+        }
+        .background-color-picker.blue {
+            background-color: #66CCCC;
+        }
+        .background-color-picker.red {
+            background-color: #FF3333;
+        }
+        .text-color-picker {
+            display: inline-block;
+            width: 100%;
+            height: 30px;
+            background-image: linear-gradient(to bottom, #333, #555);
+            background-size: 100% 200px;
+            cursor: pointer;
+        }
+        .text-color-picker::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .text-color-picker.white {
+            background-color: #FFFFFF;
+        }
+        .text-color-picker.black {
+            background-color: #000000;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Screenshot Maker</h1>
+        <form>
+            <div class="url-input">
+                <label for="url">Enter URL:</label>
+                <input type="text" id="url" name="url">
+            </div>
+            <div class="background-color-picker green">
+                <label for="background-color">Background Color:</label>
+                <input type="color" id="background-color" name="background-color">
+            </div>
+            <div class="text-color-picker white">
+                <label for="text-color">Text Color:</label>
+                <input type="color" id="text-color" name="text-color">
+            </div>
+            <button type="submit" class="button">Create Screenshot</button>
+        </form>
+    </div>
+    <script>
+        const urlInput = document.getElementById('url');
+        const backgroundColorPicker = document.getElementById('background-color');
+        const textColorPicker = document.getElementById('text-color');
+        const button = document.querySelector('.button');
+        
+        function handleSubmit(event) {
+            event.preventDefault();
+            const url = urlInput.value;
+            const backgroundColor = backgroundColorPicker.value;
+            const textColor = textColorPicker.value;
+            
+            // Create screenshot
+            const screenshot = await fetchScreenshot(url, backgroundColor, textColor);
+            
+            // Display screenshot
+            const imageElement = document.createElement('img');
+            imageElement.src = screenshot;
+            document.body.appendChild(imageElement);
+        }
+        
+        async function fetchScreenshot(url, backgroundColor, textColor) {
+            const response = await fetch(url);
+            const html = await response.text();
+            
+            // Remove unnecessary elements
+            const cleanHtml = html.replace(/<\/?(?:div|p| span)\b[^>]*?\/>/g, '');
+            
+            // Add custom styles
+            const style = `
+                body {
+                    background-color: ${backgroundColor};
+                    color: ${textColor};
+                }
+            };`;
+            cleanHtml = cleanHtml.concat(`<style>${style}</style>`);
+            
+            // Create screenshot
+            const blob = new Blob([cleanHtml], {type: 'text/html'});
+            const url = URL.createObjectURL(blob);
+            const imageElement = document.createElement('img');
+            imageElement.src = url;
+            return imageElement.outerHTML;
+        }
+        
+        button.addEventListener('click', handleSubmit);
+    </script>
+</body>
+</html>
