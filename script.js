@@ -1,8 +1,19 @@
 document.querySelector('#form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const url = document.querySelector('#url').value;
-    const backgroundColor = document.querySelector('#backgroundColor').value;
-    const textColor = document.querySelector('#textColor').value;
+
+const form = document.querySelector('#form');
+const urlInput = document.querySelector('#url');
+const backgroundColorInput = document.querySelector('#backgroundColor');
+const textColorInput = document.querySelector('#textColor');
+const textArea = document.querySelector('#text');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const url = urlInput.value;
+    const backgroundColor = backgroundColorInput.value;
+    const textColor = textColorInput.value;
+    const text = textArea.value;
+    
     const canvas = document.createElement('canvas');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -23,3 +34,4 @@ document.querySelector('#form').addEventListener('submit', (e) => {
     link.setAttribute('download', `screenshot_${new Date().getTime()}.png`);
     link.click();
 });
+
