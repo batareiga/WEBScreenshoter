@@ -15,14 +15,19 @@ form.addEventListener('submit', (e) => {
     const text = textArea.value;
     
     const canvas = document.createElement('canvas');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    const img = new Image();
-    img.src = url;
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+const canvas = createCanvas(window.innerWidth, window.innerHeight);
+const ctx = canvas.getContext('2d');
+ctx.fillStyle = backgroundColor;
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+const img = new Image();
+img.src = url;
+ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+ctx.font = '24px Arial';
+ctx.fillStyle = textColor;
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText(text, canvas.width / 2, canvas.height / 2);
     ctx.font = '24px Arial';
     ctx.fillStyle = textColor;
     ctx.textAlign = 'center';
