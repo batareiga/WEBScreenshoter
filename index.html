@@ -3,28 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Screenshot</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ScreenShot</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<script src='script.js'>
-
-
-<form id="screenshot-form">
-  <label for="url">Enter URL:</label>
-  <input type="text" id="url" name="url">
-  <br><br>
-  <label for="background-color">Background color:</label>
-  <input type="color" id="background-color" name="background-color">
-  <br><br>
-  <label for="text-color">Text color:</label>
-  <input type="color" id="text-color" name="text-color">
-  <br><br>
-  <button type="submit">Create Screenshot</button>
-</form>
-
-</script>
-    
+    <h1>ScreenShot</h1>
+    <form id="form">
+        <label for="url">Enter URL:</label>
+        <input type="text" id="url" name="url"><br><br>
+        <label for="backgroundColor">Background Color:</label>
+        <input type="color" id="backgroundColor" name="backgroundColor"><br><br>
+        <label for="textColor">Text Color:</label>
+        <input type="color" id="textColor" name="textColor"><br><br>
+        <button type="submit">Take Screenshot</button>
+    </form>
+    <div id="screenshot"></div>
+    <script src="script.js"></script>
 </body>
 </html>
